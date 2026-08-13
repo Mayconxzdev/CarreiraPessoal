@@ -10,47 +10,28 @@ permissions:
   contents: read
 
 jobs:
-  repository:
+  validate-public-edition:
     runs-on: ubuntu-latest
+    timeout-minutes: 15
     steps:
-      - uses: actions/checkout@v5
-      - name: Verify public repository structure
+      - uses: actions/checkout@v6
+      - uses: actions/setup-python@v6
+        with:
+          python-version: '3.12'
+      - name: Verify recruiter-facing structure
         shell: bash
         run: |
           set -euo pipefail
           test -f README.md
-          test -f README.en.md
-          test -f docs/CASE_STUDY.md
           test -f docs/ARCHITECTURE.md
+          test -f docs/DECISIONS.md
           test -f docs/PRIVACY.md
-          test -f docs/images/01-hoje.png
-          test -d app
-          echo "Repository structure OK"
-      - uses: actions/setup-python@v6
-        with:
-          python-version: '3.12'
+          test -f docs/TESTING.md
+          test -f examples/career_goal.py
+          test -f examples/evidence_guard.py
+          test -f examples/resume_router.py
+          echo "Public portfolio structure OK"
+      - name: Compile published source examples
+        run: python -m compileall -q examples scripts
       - name: Public safety scan
         run: python scripts/public_safety_scan.py
-      - name: Compile Python
-        shell: bash
-        run: |
-          set -euo pipefail
-          TARGETS="scripts"
-          [ -d app ] && TARGETS="$TARGETS app"
-          [ -d tests ] && TARGETS="$TARGETS tests"
-          python -m compileall -q $TARGETS
-
-  frontend:
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v5
-      - uses: actions/setup-node@v4
-        with:
-          node-version: '22'
-          cache: npm
-          cache-dependency-path: frontend/package-lock.json
-      - name: Install and build frontend
-        working-directory: frontend
-        run: |
-          npm ci
-          npm run build
