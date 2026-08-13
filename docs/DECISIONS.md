@@ -1,37 +1,33 @@
 # Decisões de engenharia e produto
 
-## 1. O core não depende de IA
+## 1. IA é reforço, não requisito
 
-Descoberta, normalização, deduplicação, tracking e regras determinísticas continuam úteis sem LLM. IA entra como reforço para tarefas em que acrescenta valor, e pode ser local ou fornecida por endpoint compatível.
+Descoberta, validação, deduplicação, matching determinístico, histórico e acompanhamento continuam operacionais sem provider de IA. Isso reduz lock-in e permite operação privada/local.
 
-**Motivo:** reduzir dependência de custo, provedor e disponibilidade, além de manter o produto funcional em diferentes computadores.
+## 2. Career Goal Gate separado do matching
 
-## 2. Match técnico não é decisão de carreira
+Aderência técnica não implica valor de carreira. O produto separa elegibilidade, aderência, legitimidade/confiança, valor da oportunidade e direção profissional.
 
-O domínio separa elegibilidade, aderência, confiança, valor da oportunidade e direção de carreira. Uma vaga pode conter tecnologias conhecidas e ainda não merecer prioridade.
+## 3. Fonte de verdade profissional versionada
 
-**Motivo:** evitar que um score único esconda restrições, objetivos e trade-offs importantes.
+Currículo importado é prioritário; GitHub e portfólio acrescentam evidências públicas. Uma mudança relevante cria nova versão e invalida artefatos que dependiam do snapshot antigo.
 
-## 3. Evidência antes de geração
+## 4. Evidência antes de texto persuasivo
 
-O perfil versionado funciona como fonte de verdade e o EvidenceGuard limita alegações que não estejam sustentadas por currículo, GitHub, portfólio ou evidências aceitas.
+Resume Router e componentes de IA recebem fatos/projetos sustentados; métricas, senioridade, liderança e produção recebem tratamento mais restritivo para reduzir afirmações inventadas.
 
-**Motivo:** impedir que otimização de candidatura vire invenção de senioridade, métricas ou experiência.
+## 5. Human-in-the-loop no efeito externo
 
-## 4. Sem auto-submit
+O Companion pode preparar campos e anexos, mas não executa o envio final. A decisão reduz risco de candidatura errada e mantém o usuário responsável pela ação externa.
 
-A extensão e o desktop podem preparar informações e auxiliar o preenchimento, mas o envio final continua manual.
+## 6. Suporte de ATS sem marketing inflado
 
-**Motivo:** preservar controle humano, reduzir o risco de candidatura incorreta e respeitar as regras/termos das plataformas utilizadas.
+O registry reconhece 102 famílias/plataformas, mas o código atual possui 11 coletores diretos dedicados. Famílias sem API pública universal ficam como capture/detect em vez de serem anunciadas como integração completa.
 
-## 5. Local-first
+## 7. Local-first e sidecar
 
-Perfil, histórico e banco de trabalho ficam locais por padrão. Recursos externos são opcionais.
+A UI Tauri conversa com uma API FastAPI local em loopback. Dados ficam em SQLite no perfil local do usuário; extras como modelos, container runtime, SearXNG ou Qdrant são capacidades opcionais.
 
-**Motivo:** os dados tratados são pessoais e mudam constantemente; portabilidade e privacidade importam mais do que centralizar tudo em um SaaS.
+## 8. Installer-first
 
-## 6. Fontes são avaliadas por qualidade
-
-O produto mede rendimento, unicidade e latência, em vez de premiar uma fonte apenas por devolver muito volume.
-
-**Motivo:** centenas de resultados duplicados ou ruins não representam descoberta útil.
+O usuário final não deveria instalar Python, Node ou Rust. O pipeline produz sidecar PyInstaller + Tauri/NSIS e só promove o candidato depois de install/reinstall/uninstall smoke no Windows.
