@@ -1,13 +1,37 @@
-# Testes e validação
+# Testes e gates
 
-O projeto possui testes automatizados cobrindo regras de negócio, API, persistência, matching, evidências, fontes e fluxos críticos. A edição pública evita congelar no README um número histórico de testes: o resultado atual deve ser conferido na CI e no código da versão publicada.
+## Evidência da versão 12.5.2
 
-## Gates principais
+Última validação de fonte registrada no pacote entregue em 13/08/2026:
 
-```bash
-python -m compileall -q app tests scripts
-python -m pytest -q
-python scripts/public_safety_scan.py
+```text
+283/283 testes Python PASS
+6/6 validações adicionais PASS
+compileall app+tests PASS
+node --check popup.js PASS
+node --check background.js PASS
 ```
 
-A release Windows também depende dos gates de frontend/desktop e do empacotamento real antes de ser promovida. Os workflows públicos priorizam validações reproduzíveis e não tratam documentação antiga como fonte de verdade para o estado atual.
+As auditorias intermediárias da evolução 12.5 registraram contagens menores porque novos testes foram adicionados durante o hardening. Para a edição pública, **283 + 6** é a referência mais recente do source candidate.
+
+## CI pública
+
+A CI pública reconstrói o frontend, executa `compileall`, `pytest`, checks do Companion e o safety scan.
+
+## Gate físico Windows
+
+A validação do instalador é separada porque exige o ciclo real:
+
+```text
+Tauri/Rust check
+→ frontend
+→ PyInstaller sidecar
+→ NSIS
+→ clean install
+→ API/WebView2/sidecar smoke
+→ same-version reinstall
+→ smoke novamente
+→ silent uninstall
+```
+
+O projeto não rotula um instalador como release final enquanto esse gate não estiver verde.
