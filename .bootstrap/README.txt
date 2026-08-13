@@ -1,0 +1,1 @@
+Temporary bootstrap files used to publish the sanitized public source release. These files are removed automatically after extraction.
