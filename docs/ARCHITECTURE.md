@@ -1,27 +1,59 @@
-# Arquitetura
+# Arquitetura — Carreira Pessoal 12
 
-```mermaid
-flowchart LR
-    U[Desktop Windows / Tauri 2] --> F[React + TypeScript + Vite]
-    F --> A[FastAPI local / sidecar Python]
-    A --> D[(SQLite / WAL / FTS5)]
-    A --> S[Source Intelligence]
-    A --> M[Matching + Career Goal Gate]
-    A --> E[EvidenceGuard + Resume Router]
-    A --> C[CRM de candidaturas]
-    A --> R[Resource Manager]
-    R --> L[IA local / Ollama / LM Studio]
-    R --> Q[Busca semântica / Qdrant opcional]
-    R --> X[SearXNG opcional]
-    B[Extensão Chrome/Edge] --> A
+## Visão
+
+```text
+Tauri / navegador local
+        │
+React + TypeScript UI
+        │ HTTP localhost
+Carreira Engine (FastAPI)
+ ├─ scheduler + queue/workers
+ ├─ source engine
+ ├─ validation/liveness
+ ├─ matching + opportunity value
+ ├─ applications + evidence bundle
+ ├─ resume/evidence/answers
+ ├─ Capability Broker
+ ├─ Resource Manager
+ └─ AI Gateway / Model Router
+        │
+SQLite + arquivos locais
 ```
 
-## Princípios
+O processo visível é um único aplicativo. O Tauri inicia o sidecar `carreira-engine.exe`; API, scheduler e worker convivem na engine.
 
-1. **Local-first:** dados de carreira permanecem locais por padrão.
-2. **Sem IA obrigatória:** descoberta, deduplicação, tracking e regras principais continuam funcionais sem LLM.
-3. **Evidência antes de geração:** currículos e respostas devem usar somente fatos sustentados pelo perfil versionado.
-4. **Human-in-the-loop:** o sistema prepara; a decisão e o envio final pertencem ao usuário.
-5. **Adaptabilidade:** fontes, modelos e recursos externos são opcionais e substituíveis.
+## Zero-dependency baseline
 
-A documentação evita tratar integrações opcionais como dependências obrigatórias ou como evidência de uso em produção fora do ambiente pessoal.
+Uma instalação limpa precisa funcionar sem recurso externo. As capacidades obrigatórias são `job_discovery`, `job_validation`, `text_matching` e `scheduler`. Recursos opcionais entram como capacidades adicionais.
+
+## Capability Broker
+
+Detecta hardware e recursos conhecidos sem port scan agressivo. O sistema raciocina em capacidades (`chat`, `embeddings`, `web_search`, `containers`) e não em marcas. Detectores específicos existem apenas na borda.
+
+## Resource Manager
+
+Gerencia extras a partir de `app/default_data/resources.yaml`:
+
+`detectar → resolver dependências → instalar → configurar → verificar → ativar`
+
+Instalações externas usam canal estável suportado e health-check. Estado fica em `storage/resources/resource_state.json`.
+
+## AI Gateway
+
+Providers podem ser autodetectados localmente ou cadastrados no banco. Adapters iniciais: OpenAI-compatible e Anthropic-compatible. A seleção considera capacidades, política, local/nuvem e prioridade.
+
+A IA não decide elegibilidade objetiva nem altera evidências sem gate humano.
+
+## Dados
+
+Mutable data fica em `%LOCALAPPDATA%\CarreiraPessoal`. Assets de aplicação ficam no pacote. Esse corte é obrigatório para PyInstaller/Tauri e upgrades.
+
+## Segurança
+
+- localhost only;
+- token separado para extensão;
+- secret vault para chaves;
+- redaction de PII para nuvem quando habilitado;
+- conteúdo de vaga tratado como não confiável;
+- submit final humano.
