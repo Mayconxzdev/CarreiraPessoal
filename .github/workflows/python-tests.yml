@@ -1,0 +1,42 @@
+name: Python tests
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+permissions:
+  contents: read
+
+jobs:
+  tests:
+    runs-on: windows-latest
+    steps:
+      - uses: actions/checkout@v5
+      - uses: actions/setup-python@v6
+        with:
+          python-version: '3.12'
+      - name: Install dependencies
+        shell: pwsh
+        run: |
+          python -m pip install --upgrade pip
+          if (Test-Path "requirements.txt") {
+            python -m pip install -r requirements.txt
+          }
+          foreach ($candidate in @("requirements-dev.txt", "requirements-test.txt", "requirements_test.txt")) {
+            if (Test-Path $candidate) { python -m pip install -r $candidate }
+          }
+          python -m pip install pytest
+          python -m pip check
+      - name: Compile
+        shell: pwsh
+        run: |
+          $targets = @("scripts")
+          if (Test-Path "app") { $targets += "app" }
+          if (Test-Path "tests") { $targets += "tests" }
+          python -m compileall -q @targets
+      - name: Test
+        run: python -m pytest -q
+      - name: Public safety scan
+        run: python scripts/public_safety_scan.py
