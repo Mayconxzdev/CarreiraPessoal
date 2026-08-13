@@ -1,111 +1,107 @@
 # Carreira Pessoal
 
-> **Career intelligence local-first para Windows:** descobre oportunidades, valida aderência à direção profissional, organiza evidências, prepara currículo e acompanha candidaturas em um fluxo único.
+> **Career intelligence local-first para Windows:** um produto pessoal que descobre e organiza oportunidades, separa aderência técnica de direção profissional, usa evidências como fonte de verdade e mantém o envio final sob controle humano.
 
+[![Portfolio check](https://github.com/Mayconxzdev/CarreiraPessoal/actions/workflows/portfolio-check.yml/badge.svg)](https://github.com/Mayconxzdev/CarreiraPessoal/actions/workflows/portfolio-check.yml)
+[![Published examples](https://github.com/Mayconxzdev/CarreiraPessoal/actions/workflows/python-tests.yml/badge.svg)](https://github.com/Mayconxzdev/CarreiraPessoal/actions/workflows/python-tests.yml)
 ![Python](https://img.shields.io/badge/Python-FastAPI-3776AB?logo=python&logoColor=white)
 ![React](https://img.shields.io/badge/React-TypeScript-20232A?logo=react&logoColor=61DAFB)
 ![Tauri](https://img.shields.io/badge/Tauri-2-24C8DB?logo=tauri&logoColor=white)
 ![SQLite](https://img.shields.io/badge/SQLite-FTS5-003B57?logo=sqlite&logoColor=white)
-![Windows](https://img.shields.io/badge/Windows-x64-0078D6?logo=windows&logoColor=white)
 
-## Por que existe
+[English](README.en.md) · [Arquitetura](docs/ARCHITECTURE.md) · [Decisões](docs/DECISIONS.md) · [Privacidade](docs/PRIVACY.md) · [Case técnico](docs/CASE_STUDY.md)
 
-Criei o **Carreira Pessoal** para resolver problemas da minha própria rotina: tempo gasto procurando vagas, oportunidades duplicadas, manutenção constante de currículo/evidências e dificuldade de separar uma vaga tecnicamente parecida de uma oportunidade que realmente faz sentido para a direção de carreira.
+## O problema que transformei em produto
+
+Criei o **Carreira Pessoal** para resolver a minha própria rotina de busca: tempo gasto procurando vagas, resultados duplicados, currículo/evidências desatualizados e o risco de priorizar uma oportunidade tecnicamente parecida que não leva à direção profissional desejada.
 
 ```text
-descobrir → validar → deduplicar → Career Goal Gate → matching → evidências
-         → Resume Router → Fitness Gate → revisão → acompanhamento
+descobrir → validar → deduplicar → Career Goal Gate → matching
+         → evidências → Resume Router → Fitness Gate
+         → revisão humana → acompanhamento
 ```
 
-O núcleo é **local-first** e funciona sem IA. Modelos locais ou endpoints compatíveis entram apenas como reforço opcional.
+O sistema é usado na minha rotina e foi desenhado para continuar útil **sem IA**. Modelos locais ou endpoints compatíveis entram como reforço opcional, não como dependência do núcleo.
 
-## O que o projeto demonstra
+## O que vale observar
 
-- **Career Goal Gate:** separa compatibilidade técnica de direção profissional;
-- **Evidence Vault:** perfil, currículo, GitHub e portfólio formam uma fonte de verdade versionada;
-- **Resume Router + Fitness Gate:** seleciona evidências sustentadas e valida a preparação antes do uso;
-- **Source Intelligence:** acompanha saúde, latência, unicidade e rendimento das fontes;
-- **CRM de candidaturas:** registra evolução do processo sem perder contexto;
-- **Browser Companion:** auxilia análise e preparação no navegador, mantendo a decisão final com o usuário;
-- **IA adaptável:** Ollama, LM Studio e endpoints compatíveis são opcionais;
-- **Distribuição Windows:** Python/FastAPI empacotado como sidecar, frontend React e shell Tauri/NSIS.
+| Decisão | Por que existe |
+|---|---|
+| **Career Goal Gate** | Match técnico não significa que a vaga é boa para a direção de carreira. |
+| **EvidenceGuard** | Métricas, senioridade, produção e outras alegações sensíveis exigem evidência específica. |
+| **Resume Router + Fitness Gate** | O currículo só é tratado como pronto após regras de ATS, snapshot, direção, fit e evidências. |
+| **Source Intelligence** | Fontes são avaliadas por saúde, latência, unicidade e rendimento, não apenas volume. |
+| **Local-first** | Perfil, histórico e dados de trabalho permanecem no computador por padrão. |
+| **Human-in-the-loop** | O produto prepara e auxilia; CAPTCHA, decisão e envio final continuam humanos. |
 
-## Interface real
+## Produto real
 
-A versão `12.5.2` possui telas funcionais para **Hoje**, **Oportunidades**, **Candidaturas**, **Carreira**, **Perfil**, **Fontes** e **Recursos**. Em uma execução real registrada durante a auditoria, o painel de fontes exibiu **21 fontes**, **528 resultados brutos** e **328 oportunidades únicas**. Esses números representam apenas aquele recorte de execução e variam conforme configuração e disponibilidade das fontes.
+A versão `12.5.2` possui interface desktop para **Hoje**, **Oportunidades**, **Candidaturas**, **Carreira**, **Perfil**, **Fontes** e **Recursos**, além de Browser Companion para Chrome/Edge.
 
-## Arquitetura
+Em um recorte real de uso registrado durante a auditoria pública, o painel de fontes mostrou **21 fontes, 528 resultados brutos e 328 oportunidades únicas**. É uma fotografia operacional, não um benchmark permanente.
+
+O projeto reconhece **102 famílias ATS/career platforms**; **11 têm coletores diretos dedicados** no código atual. As demais não são vendidas como integrações diretas quando não existe uma interface pública confiável.
+
+## Arquitetura do produto completo
 
 ```mermaid
 flowchart LR
     U[Usuário] --> T[Tauri 2 / Windows]
     T --> R[React + TypeScript + Vite]
-    R --> A[FastAPI local / sidecar Python]
+    R --> A[FastAPI local / sidecar]
     A --> D[(SQLite / WAL / FTS5)]
     A --> S[Source Intelligence]
     A --> M[Matching + Career Goal]
-    A --> E[Evidence Vault + Resume Router]
+    A --> E[EvidenceGuard + Resume Router]
     A --> C[CRM de candidaturas]
     A --> P[IA opcional]
-    B[Companion Chrome/Edge] --> A
+    B[Browser Companion MV3] --> A
 ```
 
-### Stack
+**Stack do produto:** Python 3.12, FastAPI, Pydantic, SQLAlchemy/Alembic, React, TypeScript, Vite, Tauri 2/Rust, SQLite/WAL/FTS5, Chrome/Edge MV3, PyInstaller e NSIS. Recursos opcionais incluem Ollama/LM Studio, embeddings locais, SearXNG e banco vetorial.
 
-| Camada | Tecnologias |
-|---|---|
-| Desktop | Tauri 2, Rust, NSIS |
-| Frontend | React, TypeScript, Vite, TanStack Query |
-| Engine | Python 3.12, FastAPI, Pydantic, SQLAlchemy, Alembic |
-| Dados | SQLite, WAL, FTS5 |
-| Descoberta | coletores ATS, JobSpy auxiliar, fontes brasileiras, SearXNG opcional |
-| Matching | regras determinísticas, texto e embeddings locais opcionais |
-| IA | provider-agnostic; local ou endpoint compatível |
-| Extensão | Chrome/Edge MV3 Side Panel |
-| Qualidade | pytest, compileall, Ruff e gates de release |
-| Distribuição | PyInstaller sidecar + Tauri/NSIS |
+## Código publicado para revisão
 
-## Descoberta de vagas
+Este repositório é a **edição pública de portfólio**. Em vez de publicar perfil, banco local, histórico de candidaturas e todo o workspace pessoal, ele expõe documentação arquitetural e trechos reais sanitizados das partes que melhor demonstram as decisões do produto:
 
-O registry atual reconhece **102 famílias ATS/career platforms**. **11 possuem coletores diretos dedicados**; outras famílias são reconhecidas/capturadas sem serem apresentadas como integrações diretas quando não existe uma interface pública confiável.
+- [`examples/career_goal.py`](examples/career_goal.py) — gate determinístico de direção profissional;
+- [`examples/evidence_guard.py`](examples/evidence_guard.py) — bloqueio de alegações sem evidência suficiente;
+- [`examples/resume_router.py`](examples/resume_router.py) — roteamento e fitness gate do currículo.
 
-## Decisões de produto
+Os exemplos preservam a lógica do código auditado, mas dependências e dados pessoais do workspace não fazem parte da edição pública. Isso é intencional.
 
-O projeto prioriza controle e explicabilidade: dados locais por padrão, evidência antes de geração, IA opcional, histórico versionado e revisão humana antes de qualquer ação externa. As decisões e trade-offs estão documentados em [`docs/DECISIONS.md`](docs/DECISIONS.md).
+## Qualidade e evidências
 
-## Validação
-
-**Versão auditada:** `12.5.2`
-
-Última validação de fonte registrada em 13/08/2026:
+Na versão-fonte `12.5.2`, a última validação registrada em **13/08/2026** foi:
 
 ```text
 283/283 testes Python PASS
 6/6 validações adicionais PASS
 compileall app+tests PASS
-node --check Companion PASS
+node --check Browser Companion PASS
 ```
 
-O instalador Windows possui um gate separado de build, instalação limpa, smoke test, reinstalação e desinstalação. A documentação não promove um instalador como final antes desse ciclo ficar verde.
+A CI deste repositório público faz outra função: verifica a estrutura da edição de portfólio, compila os exemplos publicados e executa o safety scan. A evidência de release e a CI pública são mantidas separadas para não fingir que um subconjunto público executa toda a suíte do workspace completo.
 
-Veja [`docs/TESTING.md`](docs/TESTING.md), [`docs/ARCHITECTURE.md`](docs/ARCHITECTURE.md), [`docs/PRIVACY.md`](docs/PRIVACY.md) e [`docs/PUBLIC_RELEASE_AUDIT.md`](docs/PUBLIC_RELEASE_AUDIT.md).
+## Segurança e automação responsável
 
-## Estrutura
+- IA não é requisito do core;
+- `AUTO_SUBMIT_ENABLED=false` por padrão no produto completo;
+- CAPTCHA não é contornado;
+- vagas e HTML externos são entrada não confiável, não instruções de sistema;
+- providers customizados em nuvem exigem transporte seguro;
+- segredos ficam separados da configuração comum;
+- backup/restore valida integridade e rejeita path traversal;
+- o envio final continua sob decisão humana.
 
-```text
-app/                    engine FastAPI, domínio, coletores e serviços
-frontend/               React + TypeScript + Vite
-apps/desktop/            Tauri 2 / Rust / NSIS
-tests/                   suíte automatizada
-packaging/windows/       build, contratos e smoke do instalador
-tools/                   gates de implementação/release
-data/                    bootstrap público genérico
-docs/                    arquitetura, produto, privacidade e testes
-```
+Veja [Privacidade](docs/PRIVACY.md) e [Decisões](docs/DECISIONS.md).
+
+## Por que publiquei assim
+
+Meu objetivo com este repositório não é mostrar o maior número possível de arquivos. É permitir que um recrutador ou engenheiro entenda rapidamente **o problema, as decisões, os trade-offs e exemplos reais do código**, sem expor dados da minha busca pessoal.
 
 ## Autoria
 
-Projeto pessoal concebido e desenvolvido por **Maycon Ferreira** para resolver a própria rotina de busca e candidatura. Requisitos, arquitetura, revisão, testes, troubleshooting e decisões de produto são tratados como parte do trabalho de engenharia, inclusive quando ferramentas de IA são usadas durante o desenvolvimento.
+Projeto pessoal concebido e desenvolvido por **Maycon Ferreira**. Uso ferramentas de IA como apoio de pesquisa e desenvolvimento, mas requisitos, arquitetura, revisão, testes, troubleshooting e decisões finais permanecem sob minha responsabilidade.
 
-**Maycon Ferreira** — Automação, IA aplicada, integrações e sistemas internos.  
-[GitHub](https://github.com/Mayconxzdev) · [Portfólio](https://mayconxzdev.github.io/)
+[Portfólio](https://mayconxzdev.github.io/) · [GitHub](https://github.com/Mayconxzdev) · [LinkedIn](https://www.linkedin.com/in/maycon-ferreira-7bb870231/)
