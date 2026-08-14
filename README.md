@@ -69,7 +69,7 @@ flowchart LR
     L -. reforço .-> G
 ```
 
-A arquitetura e as decisões principais estão detalhadas em [`docs/ARCHITECTURE.md`](docs/ARCHITECTURE.md) e [`docs/DECISIONS.md`](docs/DECISIONS.md).
+A arquitetura e as decisões principais estão detalhadas em [`docs/ARCHITECTURE.md`](docs/ARCHITECTURE.md) e [`docs/DECISIONS.md`](docs/DECISIONS.md). A fronteira entre IA, evidência, privacidade, provedores e decisão humana está documentada em [`docs/AI_SYSTEM_CARD.md`](docs/AI_SYSTEM_CARD.md).
 
 ## Se quiser avaliar o código, comece aqui
 
@@ -79,7 +79,8 @@ Esta edição pública traz módulos representativos retirados e sanitizados da 
 2. [`examples/evidence_guard.py`](examples/evidence_guard.py) — valida claims contra fatos/projetos atuais e trata métricas, senioridade, produção e liderança de forma conservadora;
 3. [`examples/resume_router.py`](examples/resume_router.py) — roteamento/fitness de currículo;
 4. [`docs/ARCHITECTURE.md`](docs/ARCHITECTURE.md) — visão da arquitetura;
-5. [`docs/TESTING.md`](docs/TESTING.md) — estratégia e evidências de teste.
+5. [`docs/TESTING.md`](docs/TESTING.md) — estratégia e evidências de teste;
+6. [`docs/AI_SYSTEM_CARD.md`](docs/AI_SYSTEM_CARD.md) — papel da IA, controles, riscos e dependências externas.
 
 > Os arquivos em `examples/` são **trechos sanitizados**, não um pacote standalone. Algumas dependências (`app.models`, serviços e banco) pertencem ao workspace privado porque contêm a implementação completa e estruturas ligadas ao meu uso pessoal.
 
@@ -92,7 +93,7 @@ Esta edição pública traz módulos representativos retirados e sanitizados da 
 - o sistema pode funcionar sem provedor de IA;
 - extensões e recursos opcionais não viram dependências obrigatórias do núcleo.
 
-Mais detalhes em [`docs/PRIVACY.md`](docs/PRIVACY.md).
+Mais detalhes em [`docs/PRIVACY.md`](docs/PRIVACY.md) e [`docs/AI_SYSTEM_CARD.md`](docs/AI_SYSTEM_CARD.md).
 
 ## O que eu faria diferente hoje
 
