@@ -1,107 +1,112 @@
-# Carreira Pessoal
+# CarreiraPessoal
 
-> **Career intelligence local-first para Windows:** um produto pessoal que descobre e organiza oportunidades, separa aderência técnica de direção profissional, usa evidências como fonte de verdade e mantém o envio final sob controle humano.
+> Aplicativo Windows que criei para organizar minha própria busca de vagas: descobrir oportunidades, evitar duplicidade, comparar a vaga com o meu objetivo profissional, manter evidências atualizadas e preparar o currículo certo sem enviar nada sozinho.
 
-[![Portfolio check](https://github.com/Mayconxzdev/CarreiraPessoal/actions/workflows/portfolio-check.yml/badge.svg)](https://github.com/Mayconxzdev/CarreiraPessoal/actions/workflows/portfolio-check.yml)
-[![Published examples](https://github.com/Mayconxzdev/CarreiraPessoal/actions/workflows/python-tests.yml/badge.svg)](https://github.com/Mayconxzdev/CarreiraPessoal/actions/workflows/python-tests.yml)
-![Python](https://img.shields.io/badge/Python-FastAPI-3776AB?logo=python&logoColor=white)
-![React](https://img.shields.io/badge/React-TypeScript-20232A?logo=react&logoColor=61DAFB)
-![Tauri](https://img.shields.io/badge/Tauri-2-24C8DB?logo=tauri&logoColor=white)
-![SQLite](https://img.shields.io/badge/SQLite-FTS5-003B57?logo=sqlite&logoColor=white)
+## Por que eu fiz
 
-[English](README.en.md) · [Arquitetura](docs/ARCHITECTURE.md) · [Decisões](docs/DECISIONS.md) · [Privacidade](docs/PRIVACY.md) · [Case técnico](docs/CASE_STUDY.md)
+Eu estava gastando tempo procurando vagas em vários sites, revendo as mesmas oportunidades e atualizando currículo e evidências manualmente. A ideia do CarreiraPessoal foi juntar isso em um fluxo só e deixar a parte repetitiva por conta do sistema, mantendo a decisão final comigo.
 
-## O problema que transformei em produto
+O produto **funciona sem IA** no núcleo. IA local ou externa entra como reforço opcional para tarefas em que realmente acrescenta valor.
 
-Criei o **Carreira Pessoal** para resolver a minha própria rotina de busca: tempo gasto procurando vagas, resultados duplicados, currículo/evidências desatualizados e o risco de priorizar uma oportunidade tecnicamente parecida que não leva à direção profissional desejada.
+**Estado atual:** produto pessoal em uso · **v12.5.2**
 
-```text
-descobrir → validar → deduplicar → Career Goal Gate → matching
-         → evidências → Resume Router → Fitness Gate
-         → revisão humana → acompanhamento
-```
+## O que já está funcionando
 
-O sistema é usado na minha rotina e foi desenhado para continuar útil **sem IA**. Modelos locais ou endpoints compatíveis entram como reforço opcional, não como dependência do núcleo.
+- descoberta em múltiplas fontes com deduplicação e medição de rendimento por fonte;
+- entrada de vaga por **link, descrição ou arquivo**;
+- Career Goal Gate para evitar priorizar vaga tecnicamente parecida, mas fora da direção profissional configurada;
+- matching semântico local e análise de aderência;
+- perfil profissional versionado com currículo, GitHub, portfólio, fatos e projetos;
+- EvidenceGuard para bloquear afirmações sensíveis sem evidência suficiente;
+- Resume Router/Fitness para selecionar e preparar o currículo adequado;
+- acompanhamento da candidatura em linha do tempo;
+- extensão/assistente de navegador para ajudar no preenchimento, mantendo o **envio final manual**;
+- recursos locais opcionais como Ollama, LM Studio, containers, SearXNG e Qdrant;
+- funcionamento adaptável ao computador, sem tornar esses recursos obrigatórios.
 
-## O que vale observar
+## Números desta versão
 
-| Decisão | Por que existe |
-|---|---|
-| **Career Goal Gate** | Match técnico não significa que a vaga é boa para a direção de carreira. |
-| **EvidenceGuard** | Métricas, senioridade, produção e outras alegações sensíveis exigem evidência específica. |
-| **Resume Router + Fitness Gate** | O currículo só é tratado como pronto após regras de ATS, snapshot, direção, fit e evidências. |
-| **Source Intelligence** | Fontes são avaliadas por saúde, latência, unicidade e rendimento, não apenas volume. |
-| **Local-first** | Perfil, histórico e dados de trabalho permanecem no computador por padrão. |
-| **Human-in-the-loop** | O produto prepara e auxilia; CAPTCHA, decisão e envio final continuam humanos. |
+| Evidência | Estado registrado |
+| --- | ---: |
+| Testes Python | **283/283 aprovados** |
+| Validações adicionais | **6/6 aprovadas** |
+| Compileall | aprovado |
+| Famílias ATS reconhecidas | **102** |
+| Coletores diretos | **11** |
 
-## Produto real
+Esses números são da versão completa auditada que uso. Este repositório é uma **edição pública sanitizada e voltada à avaliação técnica**: não exponho meu banco pessoal, candidaturas, credenciais, dados de terceiros nem toda a árvore privada do aplicativo.
 
-A versão `12.5.2` possui interface desktop para **Hoje**, **Oportunidades**, **Candidaturas**, **Carreira**, **Perfil**, **Fontes** e **Recursos**, além de Browser Companion para Chrome/Edge.
+## Stack
 
-Em um recorte real de uso registrado durante a auditoria pública, o painel de fontes mostrou **21 fontes, 528 resultados brutos e 328 oportunidades únicas**. É uma fotografia operacional, não um benchmark permanente.
+`Python` · `FastAPI` · `SQLAlchemy` · `SQLite/WAL/FTS5` · `React` · `TypeScript` · `Vite` · `Tauri v2 / Rust` · `browser extension MV3` · `Docker/Podman opcional` · `Ollama/LM Studio opcional`
 
-O projeto reconhece **102 famílias ATS/career platforms**; **11 têm coletores diretos dedicados** no código atual. As demais não são vendidas como integrações diretas quando não existe uma interface pública confiável.
-
-## Arquitetura do produto completo
+## Como organizei a arquitetura
 
 ```mermaid
 flowchart LR
-    U[Usuário] --> T[Tauri 2 / Windows]
-    T --> R[React + TypeScript + Vite]
-    R --> A[FastAPI local / sidecar]
-    A --> D[(SQLite / WAL / FTS5)]
-    A --> S[Source Intelligence]
-    A --> M[Matching + Career Goal]
-    A --> E[EvidenceGuard + Resume Router]
-    A --> C[CRM de candidaturas]
-    A --> P[IA opcional]
-    B[Browser Companion MV3] --> A
+    A[Fontes / Link / Texto / Arquivo] --> B[Descoberta e normalização]
+    B --> C[Deduplicação + qualidade da fonte]
+    C --> D[Career Goal]
+    D --> E[Matching e análise]
+    E --> F[EvidenceGuard]
+    F --> G[Resume Router]
+    G --> H[Candidatura acompanhada]
+    H --> I[Assistente do navegador]
+    I --> J[Envio final manual]
+
+    P[Perfil profissional versionado] --> D
+    P --> E
+    P --> F
+    P --> G
+
+    L[IA local / externa opcional] -. reforço .-> E
+    L -. reforço .-> G
 ```
 
-**Stack do produto:** Python 3.12, FastAPI, Pydantic, SQLAlchemy/Alembic, React, TypeScript, Vite, Tauri 2/Rust, SQLite/WAL/FTS5, Chrome/Edge MV3, PyInstaller e NSIS. Recursos opcionais incluem Ollama/LM Studio, embeddings locais, SearXNG e banco vetorial.
+A arquitetura e as decisões principais estão detalhadas em [`docs/ARCHITECTURE.md`](docs/ARCHITECTURE.md) e [`docs/DECISIONS.md`](docs/DECISIONS.md).
 
-## Código publicado para revisão
+## Se quiser avaliar o código, comece aqui
 
-Este repositório é a **edição pública de portfólio**. Em vez de publicar perfil, banco local, histórico de candidaturas e todo o workspace pessoal, ele expõe documentação arquitetural e trechos reais sanitizados das partes que melhor demonstram as decisões do produto:
+Esta edição pública traz módulos representativos retirados e sanitizados da versão completa:
 
-- [`examples/career_goal.py`](examples/career_goal.py) — gate determinístico de direção profissional;
-- [`examples/evidence_guard.py`](examples/evidence_guard.py) — bloqueio de alegações sem evidência suficiente;
-- [`examples/resume_router.py`](examples/resume_router.py) — roteamento e fitness gate do currículo.
+1. [`examples/career_goal.py`](examples/career_goal.py) — gate determinístico de direção profissional;
+2. [`examples/evidence_guard.py`](examples/evidence_guard.py) — valida claims contra fatos/projetos atuais e trata métricas, senioridade, produção e liderança de forma conservadora;
+3. [`examples/resume_router.py`](examples/resume_router.py) — roteamento/fitness de currículo;
+4. [`docs/ARCHITECTURE.md`](docs/ARCHITECTURE.md) — visão da arquitetura;
+5. [`docs/TESTING.md`](docs/TESTING.md) — estratégia e evidências de teste.
 
-Os exemplos preservam a lógica do código auditado, mas dependências e dados pessoais do workspace não fazem parte da edição pública. Isso é intencional.
+> Os arquivos em `examples/` são **trechos sanitizados**, não um pacote standalone. Algumas dependências (`app.models`, serviços e banco) pertencem ao workspace privado porque contêm a implementação completa e estruturas ligadas ao meu uso pessoal.
 
-## Qualidade e evidências
+## Segurança e limites que eu escolhi de propósito
 
-Na versão-fonte `12.5.2`, a última validação registrada em **13/08/2026** foi:
+- não existe auto-submit de candidatura;
+- CAPTCHA, termos do site e confirmação final continuam humanos;
+- dados pessoais e credenciais não fazem parte da edição pública;
+- IA não cria experiência profissional nem métricas que não estejam no perfil/evidências;
+- o sistema pode funcionar sem provedor de IA;
+- extensões e recursos opcionais não viram dependências obrigatórias do núcleo.
+
+Mais detalhes em [`docs/PRIVACY.md`](docs/PRIVACY.md).
+
+## O que eu faria diferente hoje
+
+O projeto cresceu bastante desde a primeira versão. Se eu começasse de novo, eu definiria mais cedo a separação entre **núcleo obrigatório**, **recursos opcionais** e **integrações externas**. Foi uma das lições que mais ajudou nas versões recentes: o aplicativo ficou mais portátil e previsível quando parei de tratar ferramentas extras como parte obrigatória do produto.
+
+Também passei a separar melhor **aderência técnica** de **direção de carreira**. Uma vaga pode combinar com minhas tecnologias e ainda assim não me levar para o tipo de trabalho que eu quero; por isso o Career Goal virou um componente próprio.
+
+## Testes
+
+A versão completa possui suíte automatizada muito maior do que esta edição pública. No material público eu priorizo componentes que um recrutador ou engenheiro consiga inspecionar sem expor minha base pessoal.
 
 ```text
-283/283 testes Python PASS
-6/6 validações adicionais PASS
-compileall app+tests PASS
-node --check Browser Companion PASS
+v12.5.2
+283/283 testes Python aprovados
+6/6 validações adicionais aprovadas
+compileall aprovado
 ```
 
-A CI deste repositório público faz outra função: verifica a estrutura da edição de portfólio, compila os exemplos publicados e executa o safety scan. A evidência de release e a CI pública são mantidas separadas para não fingir que um subconjunto público executa toda a suíte do workspace completo.
+## Autor
 
-## Segurança e automação responsável
-
-- IA não é requisito do core;
-- `AUTO_SUBMIT_ENABLED=false` por padrão no produto completo;
-- CAPTCHA não é contornado;
-- vagas e HTML externos são entrada não confiável, não instruções de sistema;
-- providers customizados em nuvem exigem transporte seguro;
-- segredos ficam separados da configuração comum;
-- backup/restore valida integridade e rejeita path traversal;
-- o envio final continua sob decisão humana.
-
-Veja [Privacidade](docs/PRIVACY.md) e [Decisões](docs/DECISIONS.md).
-
-## Por que publiquei assim
-
-Meu objetivo com este repositório não é mostrar o maior número possível de arquivos. É permitir que um recrutador ou engenheiro entenda rapidamente **o problema, as decisões, os trade-offs e exemplos reais do código**, sem expor dados da minha busca pessoal.
-
-## Autoria
-
-Projeto pessoal concebido e desenvolvido por **Maycon Ferreira**. Uso ferramentas de IA como apoio de pesquisa e desenvolvimento, mas requisitos, arquitetura, revisão, testes, troubleshooting e decisões finais permanecem sob minha responsabilidade.
-
-[Portfólio](https://mayconxzdev.github.io/) · [GitHub](https://github.com/Mayconxzdev) · [LinkedIn](https://www.linkedin.com/in/maycon-ferreira-7bb870231/)
+**Maycon Ferreira**  
+Analista de Automação, IA e Integrações  
+[Portfólio](https://mayconxzdev.github.io/) · [LinkedIn](https://www.linkedin.com/in/maycon-ferreira-7bb870231/)
