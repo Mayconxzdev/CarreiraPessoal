@@ -10,6 +10,12 @@ O produto **funciona sem IA** no núcleo. IA local ou externa entra como reforç
 
 **Estado atual:** produto pessoal em uso · **v12.5.2**
 
+## O produto por dentro
+
+![Telas reais do CarreiraPessoal mostrando início, oportunidades, candidaturas e fontes](https://mayconxzdev.github.io/assets/evidence/carreira-overview.webp)
+
+A imagem reúne telas reais da versão que uso. O material público evita expor candidaturas pessoais, credenciais e dados de terceiros. O [case do portfólio](https://mayconxzdev.github.io/cases/carreira-pessoal/) explica o fluxo com mais contexto.
+
 ## O que já está funcionando
 
 - descoberta em múltiplas fontes com deduplicação e medição de rendimento por fonte;
