@@ -1,6 +1,19 @@
+<div align="center">
+
 # CarreiraPessoal
 
-> Aplicativo Windows que criei para organizar minha própria busca de vagas: descobrir oportunidades, evitar duplicidade, comparar a vaga com o meu objetivo profissional, manter evidências atualizadas e preparar o currículo certo sem enviar nada sozinho.
+**Produto Windows local-first para organizar descoberta de vagas, direção de carreira, evidências e currículo — sem auto-submit.**
+
+[![Portfolio check](https://github.com/Mayconxzdev/CarreiraPessoal/actions/workflows/portfolio.yml/badge.svg)](https://github.com/Mayconxzdev/CarreiraPessoal/actions/workflows/portfolio.yml)
+![Python](https://img.shields.io/badge/Python-FastAPI-3776AB?logo=python&logoColor=white)
+![Desktop](https://img.shields.io/badge/Desktop-Tauri%20v2-FFC131?logo=tauri&logoColor=111)
+![Frontend](https://img.shields.io/badge/Frontend-React%20%2B%20TypeScript-3178C6?logo=typescript&logoColor=white)
+
+[Portfólio](https://mayconxzdev.github.io/cases/carreira-pessoal/) · [Arquitetura](docs/ARCHITECTURE.md) · [Guia de revisão](docs/CODE_REVIEW_GUIDE.md) · [Testes](docs/TESTING.md) · [AI System Card](docs/AI_SYSTEM_CARD.md)
+
+</div>
+
+> Aplicativo que criei para organizar minha própria busca de vagas: descobrir oportunidades, evitar duplicidade, comparar a vaga com o meu objetivo profissional, manter evidências atualizadas e preparar o currículo certo sem enviar nada sozinho.
 
 ## Por que eu fiz
 
@@ -12,7 +25,9 @@ O produto **funciona sem IA** no núcleo. IA local ou externa entra como reforç
 
 ## O produto por dentro
 
-![Mapa visual sanitizado do CarreiraPessoal](docs/assets/carreira-product-overview.svg)
+<p align="center">
+  <img src="docs/assets/carreira-product-overview.svg" alt="Mapa visual sanitizado do CarreiraPessoal com descoberta, Career Goal, EvidenceGuard e Resume Router" width="100%">
+</p>
 
 O visual acima é um **mapa sanitizado do produto, não uma captura da interface**. Ele mantém a navegação, os principais controles e as métricas que podem ser mostradas publicamente sem depender de um arquivo externo do portfólio. Candidaturas, credenciais e dados pessoais continuam fora desta edição. O [case do portfólio](https://mayconxzdev.github.io/cases/carreira-pessoal/) explica o fluxo com mais contexto.
 
