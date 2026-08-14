@@ -1,9 +1,11 @@
-# Telas do CarreiraPessoal
+# Visual do CarreiraPessoal
 
-O case público mantém uma visão visual das telas reais da **v12.5.2** sem expor minhas candidaturas, credenciais ou dados pessoais.
+A edição pública precisa explicar o produto sem depender de candidaturas, credenciais ou dados pessoais. Por isso, a evidência visual publicada neste repositório é **local e autocontida**.
 
-[![Telas reais do CarreiraPessoal](https://mayconxzdev.github.io/assets/evidence/carreira-overview.webp)](https://mayconxzdev.github.io/cases/carreira-pessoal/)
+[![Mapa visual sanitizado do CarreiraPessoal](assets/carreira-product-overview.svg)](https://mayconxzdev.github.io/cases/carreira-pessoal/)
 
-O conjunto mostra as áreas de **Hoje, Oportunidades, Candidaturas, Perfil, Fontes e Recursos**.
+O mapa mostra as áreas de **Hoje, Oportunidades, Candidaturas, Perfil, Fontes e Recursos** e os controles principais do fluxo. Ele é deliberadamente rotulado como **mapa visual sanitizado, não screenshot da interface**.
+
+As capturas reais da aplicação podem ser republicadas quando os arquivos-fonte estiverem disponíveis em uma versão que possa ser mostrada com segurança. Até lá, o repositório não usa uma imagem externa quebrada nem apresenta uma reconstrução como se fosse captura real.
 
 Para contexto completo de problema, decisões, arquitetura e limites do produto, abra o [case no portfólio](https://mayconxzdev.github.io/cases/carreira-pessoal/).
