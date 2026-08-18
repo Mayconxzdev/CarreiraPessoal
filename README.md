@@ -4,12 +4,13 @@
 
 **Produto Windows local-first para organizar descoberta de vagas, direção de carreira, evidências e currículo — sem auto-submit.**
 
-[![Portfolio check](https://github.com/Mayconxzdev/CarreiraPessoal/actions/workflows/portfolio.yml/badge.svg)](https://github.com/Mayconxzdev/CarreiraPessoal/actions/workflows/portfolio.yml)
+[![Portfolio check](https://github.com/Mayconxzdev/CarreiraPessoal/actions/workflows/portfolio-check.yml/badge.svg)](https://github.com/Mayconxzdev/CarreiraPessoal/actions/workflows/portfolio-check.yml)
+[![Public demo tests](https://github.com/Mayconxzdev/CarreiraPessoal/actions/workflows/python-tests.yml/badge.svg)](https://github.com/Mayconxzdev/CarreiraPessoal/actions/workflows/python-tests.yml)
 ![Python](https://img.shields.io/badge/Python-FastAPI-3776AB?logo=python&logoColor=white)
 ![Desktop](https://img.shields.io/badge/Desktop-Tauri%20v2-FFC131?logo=tauri&logoColor=111)
 ![Frontend](https://img.shields.io/badge/Frontend-React%20%2B%20TypeScript-3178C6?logo=typescript&logoColor=white)
 
-[Portfólio](https://mayconxzdev.github.io/cases/carreira-pessoal/) · [Arquitetura](docs/ARCHITECTURE.md) · [Guia de revisão](docs/CODE_REVIEW_GUIDE.md) · [Testes](docs/TESTING.md) · [AI System Card](docs/AI_SYSTEM_CARD.md)
+[Portfólio](https://mayconxzdev.github.io/cases/carreira-pessoal/) · [Demo autocontida](demo/README.md) · [Arquitetura](docs/ARCHITECTURE.md) · [Guia de revisão](docs/CODE_REVIEW_GUIDE.md) · [Testes](docs/TESTING.md) · [AI System Card](docs/AI_SYSTEM_CARD.md)
 
 </div>
 
@@ -88,16 +89,20 @@ A arquitetura e as decisões principais estão detalhadas em [`docs/ARCHITECTURE
 
 ## Se quiser avaliar o código, comece aqui
 
-Esta edição pública traz módulos representativos retirados e sanitizados da versão completa:
+Para uma avaliação reproduzível sem dependências privadas, comece pela [`demo/`](demo/README.md). Ela executa somente com a biblioteca padrão do Python e demonstra, com dados sintéticos, os contratos públicos de **Career Goal, EvidenceGuard e Resume Router**, incluindo testes automatizados no GitHub Actions.
 
-1. [`examples/career_goal.py`](examples/career_goal.py) — gate determinístico de direção profissional;
-2. [`examples/evidence_guard.py`](examples/evidence_guard.py) — valida claims contra fatos/projetos atuais e trata métricas, senioridade, produção e liderança de forma conservadora;
-3. [`examples/resume_router.py`](examples/resume_router.py) — roteamento/fitness de currículo;
-4. [`docs/ARCHITECTURE.md`](docs/ARCHITECTURE.md) — visão da arquitetura;
-5. [`docs/TESTING.md`](docs/TESTING.md) — estratégia e evidências de teste;
-6. [`docs/AI_SYSTEM_CARD.md`](docs/AI_SYSTEM_CARD.md) — papel da IA, controles, riscos e dependências externas.
+Depois, esta edição pública traz módulos representativos retirados e sanitizados da versão completa:
 
-> Os arquivos em `examples/` são **trechos sanitizados**, não um pacote standalone. Algumas dependências (`app.models`, serviços e banco) pertencem ao workspace privado porque contêm a implementação completa e estruturas ligadas ao meu uso pessoal.
+1. [`demo/standalone_demo.py`](demo/standalone_demo.py) — demonstração autocontida dos três gates, sem banco ou serviços externos;
+2. [`demo/test_standalone_demo.py`](demo/test_standalone_demo.py) — testes reproduzíveis para direção profissional, evidência e roteamento;
+3. [`examples/career_goal.py`](examples/career_goal.py) — recorte sanitizado do gate determinístico de direção profissional;
+4. [`examples/evidence_guard.py`](examples/evidence_guard.py) — valida claims contra fatos/projetos atuais e trata métricas, senioridade, produção e liderança de forma conservadora;
+5. [`examples/resume_router.py`](examples/resume_router.py) — recorte sanitizado de roteamento/fitness de currículo;
+6. [`docs/ARCHITECTURE.md`](docs/ARCHITECTURE.md) — visão da arquitetura;
+7. [`docs/TESTING.md`](docs/TESTING.md) — estratégia e evidências de teste;
+8. [`docs/AI_SYSTEM_CARD.md`](docs/AI_SYSTEM_CARD.md) — papel da IA, controles, riscos e dependências externas.
+
+> Os arquivos em `examples/` continuam sendo **trechos sanitizados**, não um pacote standalone. Algumas dependências (`app.models`, serviços e banco) pertencem ao workspace privado porque contêm a implementação completa e estruturas ligadas ao meu uso pessoal. A pasta [`demo/`](demo/README.md) foi criada justamente para permitir avaliação executável sem essas dependências.
 
 ## Segurança e limites que eu escolhi de propósito
 
@@ -118,13 +123,20 @@ Também passei a separar melhor **aderência técnica** de **direção de carrei
 
 ## Testes
 
-A versão completa possui suíte automatizada muito maior do que esta edição pública. No material público eu priorizo componentes que um recrutador ou engenheiro consiga inspecionar sem expor minha base pessoal.
+A versão completa possui suíte automatizada muito maior do que esta edição pública. No material público eu priorizo componentes que um recrutador ou engenheiro consiga inspecionar sem expor minha base pessoal. A demo autocontida possui uma suíte pequena própria, executada separadamente para não misturar seus resultados sintéticos com os números da versão privada.
 
 ```text
 v12.5.2
 283/283 testes Python aprovados
 6/6 validações adicionais aprovadas
 compileall aprovado
+```
+
+Demo pública:
+
+```bash
+python demo/standalone_demo.py
+python -m unittest discover -s demo -p "test_*.py" -v
 ```
 
 ## Autor
