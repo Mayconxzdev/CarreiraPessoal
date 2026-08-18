@@ -18,9 +18,12 @@ jobs:
       - uses: actions/setup-python@v6
         with:
           python-version: '3.12'
-      - name: Compile published Python examples
+      - name: Compile published Python examples and standalone demo
         shell: pwsh
-        run: python -m compileall -q examples scripts
+        run: python -m compileall -q examples demo scripts
+      - name: Run standalone public demo tests
+        shell: pwsh
+        run: python -m unittest discover -s demo -p "test_*.py" -v
       - name: Public safety scan
         shell: pwsh
         run: python scripts/public_safety_scan.py
