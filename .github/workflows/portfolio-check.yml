@@ -18,7 +18,7 @@ jobs:
       - uses: actions/setup-python@v6
         with:
           python-version: '3.12'
-      - name: Verify recruiter-facing structure
+      - name: Check public demo structure
         shell: bash
         run: |
           set -euo pipefail
