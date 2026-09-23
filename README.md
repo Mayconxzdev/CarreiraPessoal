@@ -141,6 +141,6 @@ python -m unittest discover -s demo -p "test_*.py" -v
 
 ## Autor
 
-**Maycon Ferreira**  
-Analista de Automação e IA  
+**Maycon Ferreira**<br>
+Analista de Automação, IA e Integrações<br>
 [Portfólio](https://mayconxzdev.github.io/) · [LinkedIn](https://www.linkedin.com/in/maycon-ferreira-7bb870231/)
