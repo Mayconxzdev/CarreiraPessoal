@@ -20,7 +20,7 @@
 
 Eu estava gastando tempo procurando vagas em vários sites, revendo as mesmas oportunidades e atualizando currículo e evidências manualmente. A ideia do CarreiraPessoal foi juntar isso em um fluxo só e deixar a parte repetitiva por conta do sistema, mantendo a decisão final comigo.
 
-O produto **funciona sem IA** no núcleo. IA local ou externa entra como reforço opcional para tarefas em que realmente acrescenta valor.
+A arquitetura foi **projetada para funcionar sem IA no núcleo**. IA local ou externa é opcional em tarefas específicas; essa decisão arquitetural não equivale a comprovação de uso ponta a ponta.
 
 **Estado atual (novembro/2026): protótipo pessoal incompleto; a versão integral não teve seu fluxo de ponta a ponta homologado.** A tag histórica **v12.5.2** e seus relatórios de testes não equivalem a produto pronto ou utilizado integralmente.
 
