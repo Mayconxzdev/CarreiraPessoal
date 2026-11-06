@@ -2,7 +2,7 @@
 
 # CarreiraPessoal
 
-**Produto Windows local-first para organizar descoberta de vagas, direção de carreira, evidências e currículo — sem auto-submit.**
+**Protótipo pessoal local-first para explorar descoberta de vagas, direção de carreira, evidências e currículo — sem auto-submit.**
 
 [![Portfolio check](https://github.com/Mayconxzdev/CarreiraPessoal/actions/workflows/portfolio-check.yml/badge.svg)](https://github.com/Mayconxzdev/CarreiraPessoal/actions/workflows/portfolio-check.yml)
 [![Public demo tests](https://github.com/Mayconxzdev/CarreiraPessoal/actions/workflows/python-tests.yml/badge.svg)](https://github.com/Mayconxzdev/CarreiraPessoal/actions/workflows/python-tests.yml)
@@ -20,9 +20,9 @@
 
 Eu estava gastando tempo procurando vagas em vários sites, revendo as mesmas oportunidades e atualizando currículo e evidências manualmente. A ideia do CarreiraPessoal foi juntar isso em um fluxo só e deixar a parte repetitiva por conta do sistema, mantendo a decisão final comigo.
 
-O produto **funciona sem IA** no núcleo. IA local ou externa entra como reforço opcional para tarefas em que realmente acrescenta valor.
+A arquitetura foi **projetada para funcionar sem IA no núcleo**. IA local ou externa é opcional em tarefas específicas; essa decisão arquitetural não equivale a comprovação de uso ponta a ponta.
 
-**Estado atual:** produto pessoal em uso · **v12.5.2**
+**Estado atual (novembro/2026): protótipo pessoal incompleto; a versão integral não teve seu fluxo de ponta a ponta homologado.** A tag histórica **v12.5.2** e seus relatórios de testes não equivalem a produto pronto ou utilizado integralmente.
 
 ## O produto por dentro
 
@@ -32,7 +32,9 @@ O produto **funciona sem IA** no núcleo. IA local ou externa entra como reforç
 
 O visual acima é um **mapa sanitizado do produto, não uma captura da interface**. Ele mantém a navegação, os principais controles e as métricas que podem ser mostradas publicamente sem depender de um arquivo externo do portfólio. Candidaturas, credenciais e dados pessoais continuam fora desta edição. O [case do portfólio](https://mayconxzdev.github.io/cases/carreira-pessoal/) explica o fluxo com mais contexto.
 
-## O que já está funcionando
+## Escopo do protótipo e funcionalidades relatadas
+
+Os itens abaixo descrevem funcionalidades implementadas ou planejadas na versão privada em diferentes níveis de maturidade. **Não significam que cada jornada foi validada ponta a ponta.** O recorte público reproduz exclusivamente os gates de demonstração incluídos em `demo/`.
 
 - descoberta em múltiplas fontes com deduplicação e medição de rendimento por fonte;
 - entrada de vaga por **link, descrição ou arquivo**;
@@ -46,17 +48,13 @@ O visual acima é um **mapa sanitizado do produto, não uma captura da interface
 - recursos locais opcionais como Ollama, LM Studio, containers, SearXNG e Qdrant;
 - funcionamento adaptável ao computador, sem tornar esses recursos obrigatórios.
 
-## Números desta versão
+## Evidências e limites de validação
 
-| Evidência | Estado registrado |
-| --- | ---: |
-| Testes Python | **283/283 aprovados** |
-| Validações adicionais | **6/6 aprovadas** |
-| Compileall | aprovado |
-| Famílias ATS reconhecidas | **102** |
-| Coletores diretos | **11** |
+Relatórios históricos da versão privada registraram **283 testes Python**, outras **6 validações**, **102 famílias ATS** e **11 coletores**. Esses totais **não foram reexecutados integralmente nesta edição pública e não comprovam utilização completa do aplicativo**.
 
-Esses números são da versão completa auditada que uso. Este repositório é uma **edição pública sanitizada e voltada à avaliação técnica**: não exponho meu banco pessoal, candidaturas, credenciais, dados de terceiros nem toda a árvore privada do aplicativo.
+A demonstração pública contém uma suíte própria pequena. Uma revisão externa também identificou um caso de incompatibilidade de senioridade (vaga júnior classificada como alinhada a preferência sênior), que precisa de correção e testes de regressão. O conjunto atual **não deve ser apresentado como produto homologado**.
+
+Este repositório é uma edição sanitizada para avaliação parcial, sem dados pessoais, credenciais e banco de candidaturas.
 
 ## Stack
 
@@ -117,20 +115,13 @@ Mais detalhes em [`docs/PRIVACY.md`](docs/PRIVACY.md) e [`docs/AI_SYSTEM_CARD.md
 
 ## O que eu faria diferente hoje
 
-O projeto cresceu bastante desde a primeira versão. Se eu começasse de novo, eu definiria mais cedo a separação entre **núcleo obrigatório**, **recursos opcionais** e **integrações externas**. Foi uma das lições que mais ajudou nas versões recentes: o aplicativo ficou mais portátil e previsível quando parei de tratar ferramentas extras como parte obrigatória do produto.
+O protótipo cresceu bastante desde a primeira versão. Se eu começasse de novo, eu definiria mais cedo a separação entre **núcleo obrigatório**, **recursos opcionais** e **integrações externas**. Foi uma das lições que mais ajudou nas versões recentes: o aplicativo ficou mais portátil e previsível quando parei de tratar ferramentas extras como parte obrigatória do produto.
 
 Também passei a separar melhor **aderência técnica** de **direção de carreira**. Uma vaga pode combinar com minhas tecnologias e ainda assim não me levar para o tipo de trabalho que eu quero; por isso o Career Goal virou um componente próprio.
 
 ## Testes
 
-A versão completa possui suíte automatizada muito maior do que esta edição pública. No material público eu priorizo componentes que um recrutador ou engenheiro consiga inspecionar sem expor minha base pessoal. A demo autocontida possui uma suíte pequena própria, executada separadamente para não misturar seus resultados sintéticos com os números da versão privada.
-
-```text
-v12.5.2
-283/283 testes Python aprovados
-6/6 validações adicionais aprovadas
-compileall aprovado
-```
+O histórico privado registra uma suíte maior, mas sua existência e suas aprovações **não substituem uma homologação funcional real**. A edição pública foi reduzida a componentes demonstrativos e inclui falhas conhecidas que ainda precisam ser corrigidas. Não confunda o retorno de um teste de unidade com a prova da jornada de candidatura completa.
 
 Demo pública:
 
@@ -142,5 +133,5 @@ python -m unittest discover -s demo -p "test_*.py" -v
 ## Autor
 
 **Maycon Ferreira**<br>
-Analista de Automação, IA e Integrações<br>
+Técnico Júnior em Automação de Processos · sistemas e integrações<br>
 [Portfólio](https://mayconxzdev.github.io/) · [LinkedIn](https://www.linkedin.com/in/maycon-ferreira-7bb870231/)
