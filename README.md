@@ -2,7 +2,7 @@
 
 **Protótipo pessoal para organizar minha busca de vagas e as versões do currículo. Ainda está incompleto.**
 
-[Case histórico no portfólio](https://mayconxzdev.github.io/projetos/carreirapessoal/) · [Voltar ao meu GitHub](https://github.com/Mayconxzdev) · [Demo em Python](demo/README.md) · [Arquitetura](docs/ARCHITECTURE.md)
+[Case histórico no portfólio](https://mayconxzdev.github.io/cases/carreira-pessoal/) · [Voltar ao meu GitHub](https://github.com/Mayconxzdev) · [Demo em Python](demo/README.md) · [Arquitetura](docs/ARCHITECTURE.md)
 
 ## Por que comecei
 
